@@ -1,0 +1,50 @@
+<div class="container">
+    <h1 class="text-center">Order History</h1>
+    <div class="d-flex justify-content-center">
+        <div *ngIf="!orders" class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div *ngIf="loaded">
+        <div class="accordion" *ngIf="orders.length > 0; else other">
+            <div class="card" [attr.id]="'accordion_' + i" *ngFor="let order of orders; let i = index; let first = first;">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                            [attr.data-parent]="'#accordion_' + i" [attr.href]="'#collapseOne_' + i">
+                            Order Nr. {{order.id}} [{{order.timestamp}}]
+                        </button>
+                    </h2>
+                </div>
+    
+                <div [attr.id]="'collapseOne_' + i" [ngClass]="{
+                    'show':first,
+                    'collapse':!first
+                }">
+                    <div class="row align-items-center" *ngFor="let item of order.items">
+                        <div class="col-md-6">
+                            <img src="{{item.imagePath}}" [ngStyle]="{'opacity': item.deleted ? '0.4' : '1'}">
+    
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <h4 class="card-title">{{item.productName}}</h4>
+                            <h5><b>Price: {{item.price | currency : "$"}}</b></h5>
+                            <h6>Quantity: {{item.quantity}}</h6>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <button class="align-middle" *ngIf="!item.deleted" class="btn btn-primary"
+                                (click)="buyAgain(item.productId)">Buy again</button>
+                            <i *ngIf="item.deleted">Product no longer available</i>
+                        </div>
+                    </div>
+                    <h2>Total: {{getTotal(order) | currency : "$"}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <ng-template #other>
+        <h3>You have no orders 😔</h3>
+    </ng-template>
+</div>

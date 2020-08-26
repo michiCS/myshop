@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 align-self-center">
+            <a routerLink="/product/{{product.id}}">
+                <img src="{{product.imagePath}}" [ngStyle]="{'opacity': product.deleted ? '0.4' : '1'}">
+            </a>
+
+        </div>
+        <div class="col-md-3 align-self-center text-center">
+            <span *ngIf="!isInEditMode">{{product.name}}</span>
+            <input class="form-control" *ngIf="isInEditMode" type="text" [(ngModel)]="product.name"
+                (keyup)="edited=true">
+        </div>
+        <div class="col-md-2 align-self-center text-center">
+            <span *ngIf="!isInEditMode"> {{product.price | currency: "$"}}</span>
+
+            <input class="form-control" *ngIf="isInEditMode" type="number" [(ngModel)]="product.price"
+                (keyup)="edited=true">
+        </div>
+
+        <div class="col-md-3 align-self-center text-center" *ngIf="!product.deleted">
+            <button *ngIf="!isInEditMode" class="btn btn-primary text-center" (click)="switchMode()">Edit</button>
+            <button *ngIf="isInEditMode" class="btn btn-primary text-center" (click)="update()">Done</button>
+            <button class="btn btn-danger text-center" (click)="delete(product.id)">
+                <span class="material-icons">
+                    delete_outline
+                </span>
+            </button>
+        </div>
+        <!-- <div class="col-md-2 align-self-center" *ngIf="!product.deleted">
+            <button class="btn btn-danger" (click)="delete(product.id)">
+                <span class="material-icons">
+                    delete_outline
+                </span>
+            </button>
+        </div> -->
+
+        <div class="col-md-3 align-self-center text-center" *ngIf="product.deleted">
+            <span>DELETED</span>
+        </div>
+    </div>
+</div>

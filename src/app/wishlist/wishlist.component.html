@@ -1,0 +1,30 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="container">
+    <h1>Wishlist</h1>
+    <div *ngIf="products.length > 0;else other">
+        <div class="row" *ngFor="let product of products">
+            <div class="col-md-4 align-self-center">
+                <img src="{{product.imagePath}}">
+            </div>
+            <div class="col-md-3 align-self-center">{{product.name}}</div>
+            <div class="col-md-2 align-self-center">{{product.price | currency: "$"}}</div>
+            <div class="col-md-3 align-self-center">
+                <button class="btn btn-primary" (click)="addToCart(product)">
+                    <span class="material-icons md">
+                        add_shopping_cart
+                    </span>
+                </button>
+                <button class="btn btn-danger" (click)="removeFromWishlist(product)">
+                    <span class="material-icons">
+                        delete_outline
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+  
+
+    <ng-template #other>
+        <h3>Your wishlist is empty 😔</h3>
+    </ng-template>
+</div>

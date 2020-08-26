@@ -1,0 +1,29 @@
+img{
+    
+    // max-height: 80%;
+    height: 100px;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid black;
+}
+
+
+button{
+    padding: 20px;
+    margin: 3px;
+    width: 75px;
+    height: 65px;
+}
+
+
+

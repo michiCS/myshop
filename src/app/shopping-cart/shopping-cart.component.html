@@ -1,0 +1,40 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="container">
+    <h1>Shopping Cart</h1>
+    <div *ngIf="products.length > 0;else other">
+        <div class="row" *ngFor="let product of products">
+            <div class="col-md-4 align-self-center">
+                <img src="{{product.imagepath}}">
+            </div>
+            <div class="col-md-2 align-self-center">{{product.name}}</div>
+            <div class="col-md-2 align-self-center">{{product.price | currency: "$"}}</div>
+            <div class="col-md-2 align-self-center">
+                <input #quantityInput *ngIf="product.quantity >= 10" type="number" min="1" max="999" [value]="product.quantity" (change)="updateQuantity(product, quantityInput.value)">
+                <select #quantitySelect *ngIf="product.quantity < 10" (change)="updateQuantity(product, quantitySelect.value)">
+                    <option *ngFor="let quantity of quantities" [selected]="product.quantity == quantity">{{quantity}}</option>
+                    <option>10+</option>
+                </select>
+            </div>
+            <div class="col-md-2 align-self-center">
+                <button class="btn btn-danger" (click)="deleteFromShoppingCart(product)">
+                    <span class="material-icons">
+                        delete_outline
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="sum">
+            <div>
+                <b>Total ({{numProducts}} Products): {{sum | currency: "$"}}</b>
+                <br>
+                <button class="btn btn-success" (click)="checkout()">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #other>
+        <h3>Your shopping cart is empty 😔</h3>
+    </ng-template>
+    
+
+</div>

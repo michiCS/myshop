@@ -1,0 +1,96 @@
+<div class="container">
+
+  <div class="row" *ngIf="product">
+
+    <!-- <div class="col-lg-3">
+        <h1 class="my-4">Shop Name</h1>
+        <div class="list-group">
+          <a href="#" class="list-group-item active">Category 1</a>
+          <a href="#" class="list-group-item">Category 2</a>
+          <a href="#" class="list-group-item">Category 3</a>
+        </div>
+      </div> -->
+    <!-- /.col-lg-3 -->
+
+    <div class="col-lg-9">
+
+      <div class="card mt-4">
+        <img class="card-img-top img-fluid" src="{{product.imagePath}}" [ngStyle]="{'opacity': product.deleted ? '0.4' : '1'}">
+        <div class="card-body">
+          <h3 class="card-title">{{product.name}}</h3>
+          <h4>{{product.price | currency: "$"}}</h4>
+          <div class="form-group" *ngIf="!product.deleted">
+            Quantity:
+            <select #quantityInput>
+              <option *ngFor="let quantity of quantities">
+                {{quantity}}
+              </option>
+            </select>
+            <button class="btn btn-primary" (click)="addToCart(quantityInput.value)">Add to cart</button>
+          </div>
+
+
+          <p class="card-text">{{product.description}}</p>
+          <h5>
+            <ngb-rating class="text-warning" [(rate)]="rating" [readonly]="true" max="5"></ngb-rating>
+            ({{rating}})
+          </h5>
+        </div>
+      </div>
+      <!-- /.card -->
+
+
+      <div class="card card-outline-secondary my-4">
+        <div class="card-header">
+          Product Reviews
+        </div>
+        <div class="card-body">
+          <div *ngFor="let review of reviews">
+            <h6> <ngb-rating class="text-warning" [(rate)]="review.rating" [readonly]="true" max="5"></ngb-rating></h6>
+            <p>{{review.text}}</p>
+            <small class="text-muted">Posted by {{review.username}} on {{review.timestamp}}</small>
+            <button *ngIf="review.username === username" (click)="deleteReview(review.id)" class="btn btn-outline-danger">Delete Review</button>
+            <hr>
+          </div>
+          <form *ngIf="reviewFormVisable" (ngSubmit)="postReview(reviewText.value)">
+            <div>
+              <div class="form-group">
+                  <h3><ngb-rating class="text-warning"  max="5" [(rate)]="newRating"></ngb-rating></h3>
+              </div>
+              <div class="form-group">
+                <textarea #reviewText class="form-control"></textarea>
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+
+          </form>
+          <div *ngIf="allowedToReview">
+            <button *ngIf="!reviewFormVisable && !product.deleted" class="btn btn-primary" (click)="showReviewForm()">Leave a Review</button>
+          </div>
+         
+        </div>
+      </div>
+      <!-- /.card -->
+
+    </div>
+    <!-- /.col-lg-9 -->
+
+    <div class="col-lg-3">
+      <div class="card mt-4" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Seller information</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content.</p>
+          <a href="#" class="card-link">Message</a>
+          <a href="#" class="card-link">More Products</a>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>
+<!-- /.container -->

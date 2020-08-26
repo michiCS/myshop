@@ -1,0 +1,70 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="container">
+    <h1 class="text-center">Home</h1>
+    <ngb-alert *ngIf="alertMessage" type="{{alertType}}" (close)="alertMessage = ''">{{alertMessage}}</ngb-alert>
+    <div class="row no-gutters">
+        <div class="col-md-2">
+            <select style="font-size: 20px;" class="form-control"
+                (change)="onFilterChanged()" [(ngModel)]="sortParam">
+                <option value="name">Name: A-Z</option>
+                <option value="name;desc">Name: Z-A</option>
+                <option value="price">Price: Low to High </option>
+                <option value="price;desc">Price: High to Low </option>
+                <option value="created;desc">New to Old</option>
+                <option value="created">Old to New</option>
+            </select>
+        </div>
+        <div class="col-md-10">
+            <div class="form-group has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input style="font-size: 20px;" type="text" class="form-control" placeholder="Search for a Product..."
+                    [(ngModel)]="searchTerm" (keyup)="inputChanged()">
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div *ngIf="products.length === 0" class="spinner-border text-primary" style="width: 3rem; height: 3rem;"
+            role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="album py5 bg-light" *ngIf="loaded">
+        <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let product of products">
+                        <div class="card mb-4 shadow-sm">
+                            <div style="height: 150px" routerLink="/product/{{product.id}}">
+                                <img src="{{product.imagePath}}">
+                            </div>
+
+                            <div class="card-body">
+                                <h6 class="card-title text-center">{{product.name}}</h6>
+                                <div class="card-content text-center">{{product.price | currency: "$"}}</div>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded"
+                                            [ngStyle]="{'background-color': product.isInWishlist ? 'lightblue' : ''}"
+                                            (click)="handleWishlist(product)">
+                                            <span class="material-icons md-36">
+                                                favorite_border
+                                            </span>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded"
+                                            (click)="addToCart(product)">
+                                            <span class="material-icons md-36">
+                                                shopping_cart
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

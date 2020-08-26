@@ -1,0 +1,46 @@
+<div class="container">
+    <h1>Sell a new Product</h1>
+    <ngb-alert *ngIf="alertMessage" type="success" (close)="alertMessage = ''">{{alertMessage}}</ngb-alert>
+    <form (ngSubmit)="create(productForm)" #productForm="ngForm">
+        <div ngModelGroup="productData">
+            <div class="form-group">
+                <label>Productname</label>
+                <input type="text" class="form-control" [(ngModel)]="productData.name" required name="name" ngModel>
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" class="form-control" min="0.01" max="1000000" [(ngModel)]="productData.price"
+                    required name="price" ngModel>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" [(ngModel)]="productData.description" required name="description"
+                    ngModel></textarea>
+            </div>
+
+            <div class="row" style="margin-top: 5%;">
+                <div class="text-left col-md-12">
+                    <input type="file" (change)="fileChangeEvent($event)" />
+                    <button *ngIf="croppedImage" class="text-center" type="submit"
+                        class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 5%;" *ngIf="imageChangedEvent">
+                <div class="text-center col-md-6">
+                    <h5>Crop Image</h5>
+                    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false"
+                        [aspectRatio]="4 / 3" [resizeToWidth]="220" format="jpg" (imageCropped)="imageCropped($event)">
+                    </image-cropper>
+                </div>
+
+                <div class="text-center col-md-6">
+                    <h5>Preview</h5>
+                    <img [src]="croppedImage" />
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+</div>

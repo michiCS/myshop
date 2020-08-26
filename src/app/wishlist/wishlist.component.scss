@@ -1,0 +1,43 @@
+img{
+    
+    // max-height: 80%;
+    height: 100px;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+   
+    
+}
+
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid black;
+}
+
+.row > *{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-flow: row wrap;
+}
+
+button{
+    padding: 20px;
+    margin: 3px;
+}
+
+h1{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h3 {
+    text-align: center;
+}
